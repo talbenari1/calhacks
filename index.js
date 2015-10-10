@@ -1,9 +1,14 @@
 'use strict';
 
 let config = require('./config.json'); // our configuration object
-let app = require('express')(); // the application itself
+let express = require('express');
+let app = express(); // the application itself
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 let crypto = require('crypto');
 let rooms = new Map();
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
   // Create a unique ID for the user
