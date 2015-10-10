@@ -1,3 +1,5 @@
+var channel = 'chat';
+
 var ChatList = React.createClass({
   render: function() {
     var messages = this.props.messages.map(function (message) {
@@ -34,11 +36,16 @@ var ChatInput = React.createClass({
 
       return;
     },
+    handelReturnKey: function(e) {
+      if (e.which === 13) {
+        this.handleSend();
+      }
+    },
     render: function() {
       return (
         <div className="chatInput">
-          <input type="text" placeholder="Message..." ref="message" />
-          <button onClick={this.handleSend}>Send</button>
+          <input type="text" onKeyDown={this.handelReturnKey} placeholder="Message..." ref="message" />
+          <button onClick={this.handleSend} ref="send">Send</button>
         </div>
       );
     }
@@ -46,23 +53,53 @@ var ChatInput = React.createClass({
 
 window.Chat = React.createClass({
   getInitialState: function() {
-    return {data: []};
+    return {messages: []};
   },
-  handleChatSend: function(data) {
-    this.state.data.push(data);
+  handleChatSend: function(message) {
+    this.state.messages.push(message);
+    this.setState(this.state);
+
+    room.emit('send-change', {
+      channel: channel,
+      data: message
+    });
+  },
+  getData: function() {
+    return this.state.messages;
+  },
+  isEmpty: function() {
+    return !this.state.messages.length;
+  },
+  setData: function(data) {
+    this.state.messages = data;
     this.setState(this.state);
   },
+  update: function(data) {
+    if (this.state.messages.length) {
+      for (var i = this.state.messages.length - 1; i >= 0; i--) {
+        console.log(this.state.messages[i], data);
+        if (this.state.messages[i].time < data.time) {
+          this.state.messages.splice(i + 1, 0, data);
+          break;
+        }
+      }
+    } else {
+      this.state.messages.push(data);
+    }
+
+    this.setState(this.state);
+  },
+  componentDidMount: function() {
+    room.emit('join-channel', channel);  
+  },
   render: function() {
-    room.emit('join-channel', 'chat');
-    modules.chat = this;
+    modules[channel] = this;
+
     return (
       <div>
-        <ChatList messages={this.state.data}/>
+        <ChatList messages={this.state.messages}/>
         <ChatInput onSend={this.handleChatSend}/>
       </div>
     );
   }
 });
-
-// room.emit('join-channel', 'chat');
-
