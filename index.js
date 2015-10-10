@@ -3,8 +3,8 @@
 let config = require('./config.json'); // our configuration object
 let express = require('express');
 let app = express(); // the application itself
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
 let crypto = require('crypto');
 let rooms = new Map();
 
@@ -33,9 +33,6 @@ app.get('/:id', (req, res) => {
   }
 });
 
-let server = app.listen(config.port, () => {
-  let host = server.address().address;
-  let port = server.address().port;
-
-  console.log(`Listening on port ${port}`);
+app.listen(config.port, () => {
+  console.log(`Listening on port ${config.port}`);
 });
