@@ -11,5 +11,5 @@ let server = app.listen(config.port, () => {
   let host = server.address().address;
   let port = server.address().port;
 
-  console.log(`Listening on port %s and address $(`);
+  console.log(`Listening on port ${port}`);
 });
