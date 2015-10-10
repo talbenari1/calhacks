@@ -1,0 +1,26 @@
+{
+  "name": "calhacks",
+  "version": "0.1.0",
+  "description": "Our CalHacks entry",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talbenari1/calhacks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/talbenari1/calhacks/issues"
+  },
+  "homepage": "https://github.com/talbenari1/calhacks#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "devDependencies": {
+    "jscs": "^2.3.0"
+  }
+}
