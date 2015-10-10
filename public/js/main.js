@@ -1,5 +1,5 @@
 /* jshint browser: true, esnext: true */
-/* globals io */
+/* globals io, ReactDOM, React */
 'use strict';
 
 var socket = io(location.origin);
@@ -28,3 +28,8 @@ if (location.pathname !== '/') {
     });
   });
 }
+
+ReactDOM.render(
+  React.createElement('h1', null, 'Hello, world!'),
+  document.getElementById('chat')
+);
