@@ -1,4 +1,5 @@
 var channel = 'ace';
+var sendChange = true;
 
 window.AceModule = React.createClass({
   getInitialState: function() {
@@ -11,13 +12,27 @@ window.AceModule = React.createClass({
     return !this.getData().length;
   },
   setData: function(data) {
+    sendChange = false;
     this.ace.setValue(data);
+    sendChange = true;
   },
   update: function(data) {
     this.setData(data); // TODO: make betterer
   },
+  onChange: function() {
+    if (sendChange) {
+      var value = this.ace.getValue();
+
+      room.emit('send-change', {
+        channel: channel,
+        data: value
+      });
+    }
+  },
   componentDidMount: function() {
     this.ace = ace.edit('AceEditor');
+    this.ace.on('change', this.onChange);
+
     room.emit('join-channel', channel);
   },
   render: function() {
