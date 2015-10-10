@@ -36,6 +36,6 @@ window.Workspace = React.createClass({
 if (location.pathname !== '/') {
   ReactDOM.render(
     <Workspace />,
-    document.body
+    document.getElementById('main')
   );
 }

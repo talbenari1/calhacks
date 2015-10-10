@@ -18,13 +18,13 @@ socket.on('respond-new-room', function(id) {
 
   ReactDOM.render(
     <Workspace name={id}/>,
-    document.body
+    document.getElementById('main')
   );
 });
 
 if (location.pathname === '/') {
   ReactDOM.render(
     <Index />,
-    document.body
+    document.getElementById('main')
   );
 }
