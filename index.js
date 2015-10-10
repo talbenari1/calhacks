@@ -20,9 +20,11 @@ app.get('/', (req, res) => {
 app.get('/:id', (req, res) => {
   let id = req.params.id;
   if (rooms.has(id)) {
-    res.send(id);
+    // Successful connection to a room
+    res.send(`Connected to room ${id}`);
   } else {
-    res.send('Oh no! That room does not exist');
+    // Room doesn't exist
+    res.send(`Room ${id} does not exist`);
   }
 });
 
