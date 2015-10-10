@@ -18,13 +18,14 @@ window.AceModule = React.createClass({
   },
   componentDidMount: function() {
     this.ace = ace.edit('AceEditor');
+    window.ace = this.ace;
     room.emit('join-channel', channel);
   },
   render: function() {
     modules[channel] = this;
 
     return (
-      <div id="AceEditor"></div>
+      <div id="AceEditor">this is a test</div>
     )
   }
 });
