@@ -25,8 +25,7 @@ window.Workspace = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <h1>Workspace</h1>
+      <div id="Workspace">
         <Chat/>
         <AceModule />
       </div>
@@ -36,7 +35,7 @@ window.Workspace = React.createClass({
 
 if (location.pathname !== '/') {
   ReactDOM.render(
-    React.createFactory(Workspace)(null),
-    document.getElementById('index')
+    <Workspace />,
+    document.body
   );
 }

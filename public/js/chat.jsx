@@ -96,7 +96,7 @@ window.Chat = React.createClass({
     modules[channel] = this;
 
     return (
-      <div>
+      <div id="Chat">
         <ChatList messages={this.state.messages}/>
         <ChatInput onSend={this.handleChatSend}/>
       </div>
