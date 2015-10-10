@@ -22,11 +22,9 @@ if (location.pathname !== '/') {
   });
 
   room.on('request-data', function(channel) {
-    console.log(channel);
-
     room.emit('respond-data', {
       channel: channel,
-      pi: 3.14
+      value: document.getElementById('input').value || ""
     });
   });
 }

@@ -11,7 +11,6 @@ let rooms = new Map();
 app.use(express.static(__dirname + '/public'));
 
 io.on('connection', socket => {
-  console.log('A user connected');
 
   socket.on('request-new-room', () => {
     // Create a unique ID for the user
@@ -21,8 +20,6 @@ io.on('connection', socket => {
       id = crypto.randomBytes(6).toString('hex');
     } while (rooms.has(id));
 
-    console.log(id);
-
     // Create a namespace for the workspace
     let nsp = io.of(id);
 
@@ -30,23 +27,25 @@ io.on('connection', socket => {
       let flags = rooms.get(id).flags;
       // Adding a new module
       socket.on('join-channel', channel => {
-        console.log('Req to join', socket.id);
         socket.join('chat', function() {
           if (!flags[channel]) {
-            socket.broadcast.to(channel).emit('request-data', channel);
+            console.log(`Broadcasting data request to channel '${channel}'`);
+            nsp.to(channel).emit('request-data', channel);
             flags[channel] = true;
           }
         });
       });
-    });
 
-    nsp.on('respond-data', data => {
-      let flags = rooms.get(id).flags;
+      socket.on('respond-data', data => {
+        let flags = rooms.get(id).flags;
+        console.log(data);
 
-      if (flags[data.channel]) {
-        socket.to(data.channel).emit('respond-data', data);
-        flags[data.channel] = false;
-      }
+        if (flags[data.channel]) {
+          console.log(`Responding to data request for channel '${data.channel}'`);
+          socket.to(data.channel).emit('respond-data', data);
+          flags[data.channel] = false;
+        }
+      });
     });
 
     rooms.set(id, {
@@ -59,7 +58,6 @@ io.on('connection', socket => {
 app.get('/:id', (req, res) => {
   let id = req.params.id;
   if (rooms.has(id)) {
-    console.log('found', id);
     // Successful connection to a room
     res.sendFile(__dirname + '/public/index.html');
   } else {
