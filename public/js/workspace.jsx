@@ -1,26 +1,11 @@
-var room = io(location.href);
-var chat = {
-  value: 'asfg'
-};
+room = io(location.href);
 
 window.Workspace = React.createClass({
   render: function() {
-    room.emit('join-channel', 'chat');
-
-    room.on('request-data', function(channel) {
-      room.emit('respond-data', {
-        channel: channel,
-        data: chat
-      });
-    });
-
-    room.on('respond-data', function(data) {
-      console.log(data);
-    });
-    
     return (
       <div>
         <h1>Workspace</h1>
+        <Chat/>
       </div>
     );
   }
@@ -33,3 +18,13 @@ if (location.pathname !== '/') {
   );
 }
 
+room.on('request-data', function(channel) {
+  room.emit('respond-data', {
+    channel: channel,
+    data: chat
+  });
+});
+
+room.on('respond-data', function(data) {
+  console.log(data);
+});

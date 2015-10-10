@@ -41,7 +41,7 @@ io.on('connection', socket => {
         console.log(data);
 
         if (flags[data.channel]) {
-          console.log(`Responding to data request for channel '${data.channel}'`);
+          console.log(`Responding to data request for channel ${data.channel}`);
           socket.to(data.channel).emit('respond-data', data);
           flags[data.channel] = false;
         }
