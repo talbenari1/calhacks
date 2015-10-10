@@ -16,9 +16,12 @@ io.on('connection', socket => {
   socket.on('request-new-room', () => {
     // Create a unique ID for the user
     let id;
+
     do {
-      id = crypto.randomBytes(6).toString('base64');
+      id = crypto.randomBytes(6).toString('hex');
     } while (rooms.has(id));
+
+    console.log(id);
 
     // Create a namespace for the workspace
     let nsp = io.of(id);
@@ -27,20 +30,28 @@ io.on('connection', socket => {
       let flags = rooms.get(id).flags;
       // Adding a new module
       socket.on('join-channel', channel => {
-        if (!flags[channel]) {
-          socket.to(channel).emit('request-data');
-          flags[channel] = true;
-        }
-      });
-      socket.on('respond-data', data => {
-        if (flags[channel]) {
-          socket.to(channel).emit('respond-data', data);
-          flags[channel] = false;
-        }
+        console.log('Req to join', socket.id);
+        socket.join('chat', function() {
+          if (!flags[channel]) {
+            socket.broadcast.to(channel).emit('request-data', channel);
+            flags[channel] = true;
+          }
+        });
       });
     });
 
-    rooms.set(id, {nsp, flags: {}});
+    nsp.on('respond-data', data => {
+      let flags = rooms.get(id).flags;
+
+      if (flags[data.channel]) {
+        socket.to(data.channel).emit('respond-data', data);
+        flags[data.channel] = false;
+      }
+    });
+
+    rooms.set(id, {
+      nsp, flags: {}
+    });
     socket.emit('respond-new-room', id);
   });
 });
@@ -48,14 +59,15 @@ io.on('connection', socket => {
 app.get('/:id', (req, res) => {
   let id = req.params.id;
   if (rooms.has(id)) {
+    console.log('found', id);
     // Successful connection to a room
-    res.send(`Connected to room ${id}`);
+    res.sendFile(__dirname + '/public/index.html');
   } else {
     // Room doesn't exist
-    res.sendFile('public/404.html');
+    res.sendFile(__dirname + '/public/404.html');
   }
 });
 
-app.listen(config.port, () => {
+server.listen(config.port, () => {
   console.log(`Listening on port ${config.port}`);
 });
