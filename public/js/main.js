@@ -24,7 +24,7 @@ if (location.pathname !== '/') {
   room.on('request-data', function(channel) {
     room.emit('respond-data', {
       channel: channel,
-      value: document.getElementById('input').value || ""
+      value: document.getElementById('input').value || ''
     });
   });
 }
