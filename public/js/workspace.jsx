@@ -28,6 +28,7 @@ window.Workspace = React.createClass({
       <div>
         <h1>Workspace</h1>
         <Chat/>
+        <AceModule />
       </div>
     );
   }
