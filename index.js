@@ -27,24 +27,25 @@ io.on('connection', socket => {
       let flags = rooms.get(id).flags;
       // Adding a new module
       socket.on('join-channel', channel => {
-        socket.join('chat', function() {
-          if (!flags[channel]) {
-            console.log(`Broadcasting data request to channel '${channel}'`);
-            nsp.to(channel).emit('request-data', channel);
-            flags[channel] = true;
-          }
+        socket.join(channel, function() {
+          console.log(`Broadcasting data request to channel '${channel}'`);
+          socket.broadcast.to(channel).emit('request-data', channel);
+          flags[channel] = true;
         });
       });
 
       socket.on('respond-data', data => {
         let flags = rooms.get(id).flags;
-        console.log(data);
 
         if (flags[data.channel]) {
           console.log(`Responding to data request for channel ${data.channel}`);
           socket.to(data.channel).emit('respond-data', data);
           flags[data.channel] = false;
         }
+      });
+
+      socket.on('send-change', function(data) {
+        socket.broadcast.to(data.channel).emit('receive-change', data);
       });
     });
 
