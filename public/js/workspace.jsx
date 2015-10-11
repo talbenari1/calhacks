@@ -29,6 +29,7 @@ window.Workspace = React.createClass({
   render: function() {
     return (
       <div id="Workspace">
+        <header><h1>CalHacks</h1></header> 
         <Chat/>
         <AceModule />
       </div>
