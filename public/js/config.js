@@ -1,7 +1,5 @@
-var channel = 'config';
-
 var Config = {
-  data: {    
+  data: {
     usernames: {},
     name: null,
   },
@@ -12,7 +10,4 @@ var Config = {
     return this.data.names === null &&
            Object.keys(this.data.usernames).length === 0;
   }
- };
-
-room.emit('join-channel', channel);
-
+};

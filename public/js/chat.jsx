@@ -2,12 +2,14 @@ var channel = 'chat';
 
 var ChatList = React.createClass({
   render: function() {
-    var messages = this.props.messages.map(function (message) {
+    var messages = this.props.messages.map(message => {
       return (
-        <div>
+        <div key={message.author + message.time}>
           <div className="text">{message.text}</div>
           <div className="info">
-            <span className="author">{message.author === username ? 'You' : message.author}</span>
+            <span className="author">
+              {message.author === this.props.username ? 'You' : message.author}
+            </span>
             <span className="time">{message.time}</span>
           </div>
         </div>
@@ -29,7 +31,12 @@ var ChatNameRequest = React.createClass({
       return;
     }
 
-    this.props.onConfirm({username: username});
+    this.props.onConfirm(username);
+  },
+  handleReturnKey: function(e) {
+    if (e.which === 13) {
+      this.handleUsernameSet();
+    }
   },
   render: function() {
     return (
@@ -37,7 +44,7 @@ var ChatNameRequest = React.createClass({
         <label>
           Enter a username:
           <input type="text" onKeyDown={this.handleReturnKey} ref="input" />
-          <button onClick={this.handleSend}>Confirm</button>
+          <button onClick={this.handleUsernameSet}>Confirm</button>
         </label>
       </div>
     );
@@ -46,14 +53,13 @@ var ChatNameRequest = React.createClass({
 
 var ChatInput = React.createClass({
   handleSend: function() {
-    var author = room.id;
     var text = this.refs.message.value.trim();
 
     if (!text) {
       return;
     }
 
-    this.props.onSend({author: author, text: text, time: Date.now()});
+    this.props.onSend({text: text, time: Date.now()});
     this.refs.message.value = '';
   },
   handleReturnKey: function(e) {
@@ -72,22 +78,27 @@ var ChatInput = React.createClass({
 });
 
 window.Chat = React.createClass({
-  hasUsername: false,
   getInitialState: function() {
-    return {messages: []};
+    return {
+      messages: [],
+      username: null
+    };
   },
   handleUsernameSet: function(username) {
     modules.config.data.usernames[room.id] = username;
-    this.hasUsername = true;
+    this.state.username = username;
+    this.setState(this.state);
   },
   handleChatSend: function(message) {
-    this.state.messages.push(message);
-    this.setState(this.state);
+    message.author = this.state.username;
 
     room.emit('send-change', {
       channel: channel,
       data: message
     });
+
+    this.state.messages.push(message);
+    this.setState(this.state);
   },
   getData: function() {
     return this.state.messages;
@@ -122,9 +133,10 @@ window.Chat = React.createClass({
 
     return (
       <div id="Chat">
-        <ChatList messages={this.state.messages} />
-        <ChatNameRequest onConfirm={this.handleUsernameSet} />
-        <ChatInput onSend={this.handleChatSend} style={{display: this.hasUsername}} />
+        <ChatList messages={this.state.messages} username={this.state.username}/>
+        {this.state.username ?
+          <ChatInput onSend={this.handleChatSend} /> :
+          <ChatNameRequest onConfirm={this.handleUsernameSet} />}
       </div>
     );
   }

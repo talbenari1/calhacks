@@ -3,6 +3,9 @@ window.Workspace = React.createClass({
     room = io(location.href);
   },
   componentDidMount: function() {
+    room.emit('join-channel', 'config');
+    modules['config'] = Config;
+
     room.on('request-data', function(channel) {
       console.log('Request to force update');
       if (modules[channel] && !modules[channel].isEmpty()) {
