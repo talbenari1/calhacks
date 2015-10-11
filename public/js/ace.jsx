@@ -30,7 +30,13 @@ window.AceModule = React.createClass({
     }
   },
   componentDidMount: function() {
+    ace.config.set('packaged', true);
     this.ace = ace.edit('AceEditor');
+    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/');
+    this.ace.setStyle('ace-style');
+    this.ace.setTheme('tomorrow');
+    this.ace.getSession().setUseWorker(false);
+    this.ace.getSession().setMode('javascript');
     this.ace.on('change', this.onChange);
     
     room.emit('join-channel', channel);

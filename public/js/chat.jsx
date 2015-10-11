@@ -46,9 +46,9 @@ var ChatNameRequest = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div className="chatUsername">
         <label>
-          Enter a username:
+          Choose a username to join the chat:
           <input type="text" onKeyDown={this.handleReturnKey} ref="input" />
           <button onClick={this.handleUsernameSet}>Confirm</button>
         </label>
@@ -76,8 +76,8 @@ var ChatInput = React.createClass({
   render: function() {
     return (
       <div className="chatInput">
-        <input type="text" onKeyDown={this.handleReturnKey} placeholder="Message..." ref="message" />
         <button onClick={this.handleSend} ref="send">Send</button>
+        <input type="text" onKeyDown={this.handleReturnKey} placeholder="Message..." ref="message" />
       </div>
     );
   }

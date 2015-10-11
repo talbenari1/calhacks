@@ -1,4 +1,8 @@
 #AceEditor {
   height: 100%;
-  flex-grow: 3;
+  flex-grow: 2;
+}
+
+.ace-style {
+  font-family: 'Roboto Mono', monospace !important;
 }
