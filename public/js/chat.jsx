@@ -30,7 +30,7 @@ var ChatNameRequest = React.createClass({
     }
 
     this.props.onConfirm({username: username});
-  }
+  },
   render: function() {
     return (
       <div>
