@@ -14,7 +14,6 @@ window.Index = React.createClass({
 
 socket.on('respond-new-room', function(id) {
   history.pushState(null, '', id);
-  document.title = 'Workspace ' + id;
 
   ReactDOM.render(
     <Workspace name={id}/>,

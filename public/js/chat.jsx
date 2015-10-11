@@ -27,8 +27,14 @@ var ChatList = React.createClass({
 var ChatNameRequest = React.createClass({
   handleUsernameSet: function() {
     var username = this.refs.input.value.trim();
-    if(!username) {
+    if (!username) {
       return;
+    }
+    
+    for (var id in modules.config.data.usernames) {
+      if (modules.config.data.usernames.hasOwnProperty(id) && username === modules.config.data.usernames[id]) {
+        return;
+      }
     }
 
     this.props.onConfirm(username);
