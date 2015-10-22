@@ -1,6 +1,5 @@
 #AceEditor {
-  height: 100%;
-  flex-grow: 2;
+  flex: 3;
 }
 
 .ace-style {

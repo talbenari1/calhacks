@@ -28,10 +28,12 @@ window.Workspace = React.createClass({
   },
   render: function() {
     return (
-      <div id="Workspace">
-        <header><h1>CalHacks</h1></header> 
-        <Chat/>
-        <AceModule />
+      <div id="Workspace" className="main">
+        <header><h1>CalHacks</h1></header>
+        <div className="content">
+          <Chat />
+          <AceModule />
+        </div>
       </div>
     );
   }
@@ -40,6 +42,6 @@ window.Workspace = React.createClass({
 if (location.pathname !== '/') {
   ReactDOM.render(
     <Workspace />,
-    document.getElementById('main')
+    document.getElementById('render')
   );
 }

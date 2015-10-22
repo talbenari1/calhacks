@@ -1,66 +1,77 @@
 #Chat {
-  flex-grow: 1;
-  overflow: auto;
-  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-#Chat .chatUsername {
-  width: 100%;
+.chatList {
+  flex: 1;
+  padding: 0.5em;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;;
 }
 
-#Chat .chatUsername, #Chat .chatInput {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.chatInput {
+  display: flex;
 }
 
-#Chat button {
-  border: none;
-  background-color: #4271ae;
-  padding: 9px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  position: absolute;
-  z-index: 10;
-  right: 0;
+.chatUsername {
+  display: flex;
+  background-color: #ae4942;
+  color: white;
+  padding: 0.5em;
 }
 
-#Chat .chatUsername label {
-  display: block;
-  width: 100%;
-  background: #efefef;
-  color: #4d4d4c;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 5px;
+.chatUsername label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-#Chat .chatUsername label span {
-  padding: 5px;
-  display: block;
+.username {
+  display: flex;
+  margin-top: 0.5em;
 }
 
 #Chat input {
-  border: 2px solid #4d4d4c;
-  outline: none;
-  font: inherit;
-  width: 100%;
-  padding: 8px 100px 8px 8px;
-  font-size: 12px;
-  transition: .25s;
+  flex: 100%;
 }
 
-#Chat input:focus {
-  border-color: #4271ae;
+.chatInput button,
+.username button {
+  background-color: #4271ae;
+  color: white;
+  letter-spacing: 0.05em;
 }
 
-#Chat button {
-  outline: none;
+.chatInput input {
+  border-top: 2px solid #4d4d4c;
+  transition: 0.25s;
+}
+
+.chatInput input:focus {
+  border-top-color: #4271ae;
+}
+
+.message {
+  padding: 0.5em;
+  background-color: #eee;
+  margin-bottom: 0.25em;
+  align-self: flex-start;
+  border-radius: 3px;
+}
+
+.message.me {
+  align-self: flex-end;
+}
+
+.message .text {
+  margin-bottom: 0.25em;
+
+}
+
+.message .info {
+  font-size: .75em;
+  color: #666;
 }

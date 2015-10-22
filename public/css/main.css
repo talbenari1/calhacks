@@ -1,102 +1,100 @@
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
+  ;
 }
 
-html, body, #main, #Workspace {
-  width: 100%;
-  height: 100%;
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
   margin: 0;
   padding: 0;
-  font-family: Roboto;
-}
-
-#Workspace {
   display: flex;
-  flex-direction: row;
+  min-height: 100vh;
 }
 
 header {
-  flex: 1 100%;
-  padding: 1em 1.5em;
   background-color: #4271ae;
-  color: #ffffff;
+  color: white;
+  padding: 1em 2em;
 }
 
 header h1 {
   margin: 0;
 }
 
-#Index {
-  height: 100%;
-}
-
-.error {
-  color: #c82829;
-}
-
-button {
-  font-family: inherit;
+button,
+input {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
   border: none;
-  font-size: 16px;
-  padding: 0.75em;
-  color: #ffffff;
-  /*text-transform: uppercase;*/
+  background-color: white;
+  padding: 0.5em 0.75em;
   outline: none;
+  border-radius: 3px;
+}
+
+button:hover {
   cursor: pointer;
 }
 
-.buttons > button {
-  background-color: #8959a8;
-  width: 100%;
+.error {
+  color: #ae4942;
 }
 
-.buttons > button:hover,
-.buttons > button:focus {
-  background-color: #b294bb;
+.radius-left {
+  border-radius: 3px 0 0 3px;
 }
 
-.buttons {
+.radius-right {
+  border-radius: 0 3px 3px 0;
+}
+
+.radius-none {
+  border-radius: 0;
+}
+
+#render {
+  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.main {
+  flex: 1;
   flex-direction: column;
-  height: 100%;
-  width: 400px;
-  margin: auto;
-}
-
-.buttons .or {
-  font-size: 16px;
-  margin: 1em 0;
-  /*text-transform: uppercase;*/
-}
-
-input {
-  font-family: inherit;
-  flex-grow: 3;
-  border: 2px solid #000;
-  font-size: 16px;
-  padding: 0.75em;
-  border-right: none;
-  outline: none;
-}
-
-input:hover,
-input:focus {
-  border-color: #999999;
-}
-
-input + button {
-  background-color: #4271ae;
-  flex-grow: 1;
-}
-
-input + button:hover,
-input + button:focus {
-  background-color: #81a2be;
-}
-
-.joinSection {
-  width: 100%;
   display: flex;
+}
+
+.content {
+  background-color: #FFF;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.create-workspace {
+  align-self: center;
+  text-align: center;
+  font-size: 24px;
+}
+
+.create-new {
+  background-color: #42a7ae;
+  color: white;
+  width: 100%;
+}
+
+.create-or {
+  font-size: 1.125em;
+  margin: 1em 0;
+}
+
+.join {
+  background-color: #4942ae;
+  color: white;
+}
+
+.join-url {
+  background-color: #EEE;
 }

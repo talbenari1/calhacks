@@ -30,15 +30,15 @@ window.Index = React.createClass({
   },
   render: function() {
     return (
-      <div id="Index">
+      <div id="Index" className="main">
         <header><h1>CalHacks</h1></header>
-        <div className="buttons">
-          <button onClick={this.createWorkspace}>Create Workspace</button>
-          <div className="or">Or</div>
-          <div className="joinSection">
-            <input type="text" ref="joinUrl" /><button onClick={this.joinWorkspace}>Join Workspace</button>
+        <div className="content">
+          <div className="create-workspace">
+            <button onClick={this.createWorkspace} className="create-new">Create a Workspace</button>
+            <div className="create-or">OR</div>
+            <input type="text" ref="joinUrl" className="join-url radius-left" placeholder="Join a Workspace" /><button onClick={this.joinWorkspace} className="join radius-right">Join</button>
+            <div className="error">{this.state.errorMessage}</div>
           </div>
-          <div className="error">{this.state.errorMessage}</div>
         </div>
       </div>
     );
@@ -50,13 +50,13 @@ socket.on('respond-new-room', function(id) {
 
   ReactDOM.render(
     <Workspace name={id}/>,
-    document.getElementById('main')
+    document.getElementById('render')
   );
 });
 
 if (location.pathname === '/') {
   ReactDOM.render(
     <Index />,
-    document.getElementById('main')
+    document.getElementById('render')
   );
 }

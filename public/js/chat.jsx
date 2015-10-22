@@ -2,15 +2,22 @@ var channel = 'chat';
 
 var ChatList = React.createClass({
   render: function() {
+
     var messages = this.props.messages.map(message => {
+      var isMe = message.author === this.props.username;
+      var msgClasses = 'message';
+
+      if (isMe) {
+        msgClasses += ' me';
+      }
+
       return (
-        <div key={message.author + message.time}>
+        <div key={message.author + message.time} className={msgClasses}>
           <div className="text">{message.text}</div>
           <div className="info">
             <span className="author">
-              {message.author === this.props.username ? 'You' : message.author}
-            </span>
-            <span className="time">{message.time}</span>
+              {isMe ? 'You' : message.author}
+            </span> • <span className="time">{moment(message.time).format('lll')}</span>
           </div>
         </div>
       );
@@ -49,8 +56,10 @@ var ChatNameRequest = React.createClass({
       <div className="chatUsername">
         <label>
           Choose a username to join the chat:
-          <input type="text" onKeyDown={this.handleReturnKey} ref="input" />
-          <button onClick={this.handleUsernameSet}>Confirm</button>
+          <span className="username">
+            <input type="text" onKeyDown={this.handleReturnKey} ref="input" className="radius-left"/>
+            <button onClick={this.handleUsernameSet} className="radius-right">Confirm</button>
+          </span>
         </label>
       </div>
     );
@@ -76,8 +85,8 @@ var ChatInput = React.createClass({
   render: function() {
     return (
       <div className="chatInput">
-        <button onClick={this.handleSend} ref="send">Send</button>
-        <input type="text" onKeyDown={this.handleReturnKey} placeholder="Message..." ref="message" />
+        <button onClick={this.handleSend} ref="send" className="radius-none">Send</button>
+        <input type="text" onKeyDown={this.handleReturnKey} placeholder="Message..." ref="message" className="radius-none"/>
       </div>
     );
   }
